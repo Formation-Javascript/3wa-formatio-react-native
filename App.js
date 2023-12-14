@@ -1,7 +1,9 @@
 // rnfs
 import {
   Button,
+  Pressable,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -19,31 +21,43 @@ export default function App() {
     }
   };
 
+  const deleteTask = function (index) {
+    const newTasks = [...tasks];
+    newTasks.splice(index, 1);
+
+    setTasks(newTasks);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => setTextEntered(text)}
-          autoFocus
-          autoCorrect
-          value={textEntered}
-          /*
+      <View style={styles.wrapper}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setTextEntered(text)}
+            autoFocus
+            autoCorrect
+            value={textEntered}
+            /*
           Pour avoir un textarea
           multiline
           numberOfLines={4}
         */
-        />
-        <Button color={'#FFBD59'} title="Add task..." onPress={addTask} />
-      </View>
+          />
+          <Button color={'#FFBD59'} title="Add task..." onPress={addTask} />
+        </View>
 
-      {/* List of tasks */}
-      <View style={styles.tasksContainer}>
-        {tasks.map((item, index) => (
-          <View style={styles.task} key={index}>
-            <Text style={styles.taskText}>{item}</Text>
-          </View>
-        ))}
+        {/* List of tasks */}
+        <ScrollView style={styles.tasksContainer}>
+          {tasks.map((item, index) => (
+            <Pressable
+              onLongPress={() => deleteTask(index)}
+              style={styles.task}
+              key={index}>
+              <Text style={styles.taskText}>{item}</Text>
+            </Pressable>
+          ))}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -53,11 +67,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#31356E',
-    paddingTop: 35,
+    //paddingTop: 35,
+    paddingHorizontal: 30,
+  },
+  wrapper: {
+    flex: 1,
     paddingHorizontal: 30,
   },
   inputContainer: {
-    flex: 0.5,
+    flex: 0.25,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 18,
@@ -76,7 +94,8 @@ const styles = StyleSheet.create({
   task: {
     backgroundColor: '#5762B7',
     paddingVertical: 8,
-    borderRadius: 4
+    borderRadius: 4,
+    marginVertical: 8,
   },
   taskText: {
     textAlign: 'center',
