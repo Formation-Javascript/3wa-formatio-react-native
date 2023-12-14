@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "todo-app",
-    "slug": "todo-app",
+    "name": "blank",
+    "slug": "blank",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
+    "platforms": [
+      "ios",
+      "android",
+      "web"
     ]
-  },
-  "name": "todo-app"
+  }
 }
